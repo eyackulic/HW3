@@ -93,7 +93,7 @@ void FASTAreadset_LL::addNode(const char *input_seq) {
     }
 }
 
-bool FASTAreadset_LL::isEqual(const char * seq1, const char * seq2) {
+bool FASTAreadset_LL::isEqual(const char * seq1, const char * seq2, int seq_size) {
    //bool function to determine if char sequences are the same
     int i = 0;
     while (i < 50){
@@ -159,6 +159,13 @@ void FASTAreadset_LL::printLL() {
         current_ptr = first;
         while (current_ptr != nullptr) {
             cout << current_ptr->sequence << endl;
+            //if(current_ptr->sequence == entry_sequence){
+            //break
+            // current_ptr = current_ptr->next;
+            //   cout << "repeat" << endl;
+            //else(){
+            //  current_ptr = current_ptr->next;
+
             current_ptr = current_ptr->next;
         }
     } else {
@@ -166,6 +173,39 @@ void FASTAreadset_LL::printLL() {
     }
 }
 
+
+
+
+void FASTAreadset_LL::printLL2() {
+//print linked list
+    if (first != nullptr) {
+        Node *current_ptr;
+        Node * float_ptr;
+        current_ptr = first;
+        float_ptr = current_ptr->next;
+        while (current_ptr != nullptr) {
+            while(float_ptr != nullptr){
+            if (isEqual(current_ptr->sequence, float_ptr->sequence)){
+                cout << "repeat" << endl;
+            }else{
+                cout << current_ptr->sequence << endl;
+                    float_ptr = float_ptr->next;
+                }
+            }
+            current_ptr = current_ptr->next;
+            float_ptr = current_ptr->next;
+        }
+
+    }
+}
+
+bool FASTAreadset_LL::isEmpty(){
+    if(first == nullptr){
+        return true;
+    }else{
+        return false;
+    }
+}
 void FASTAreadset_LL::print_first() {
    //print first sequence
     if (first == nullptr) {
@@ -209,7 +249,7 @@ void FASTAreadset_LL::printSequences() {
 
 
 
-Node * FASTAreadset_LL::searchNode(const char *input) {
+Node * FASTAreadset_LL::searchNode(const char *input, int seq_size){
 //takes a 51 character array input of A,C,T,G
 //returns match where found in instance
    // int count = 0;
@@ -295,10 +335,11 @@ const char * FASTAreadset_LL::searchNode2(const char *input) {
 // feed last sequence and find/print location
 int count = 0;
 int h = 0;
+int seq_size = 50;
 while (h < line){
     const char * current;
     current = new_seq[h];
-            if (isEqual(current, input) == true) {
+            if (isEqual(current, input, seq_size) == true) {
                 //        cout << "match found! Node location is: " << &current_ptr->sequence << endl;
                  count++;
                  h++;
@@ -310,7 +351,7 @@ while (h < line){
                 count ++;
             }
         }
-             cout << "No match found" << endl;
+         //    cout << "No match found" << endl;
         return nullptr;
     }
 

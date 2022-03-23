@@ -64,6 +64,7 @@ public:
     void abridgedSearch(const char * input);
     const char * searchNode2(const char * input);
 
+    void printLL2();
 };
 
 //timer function

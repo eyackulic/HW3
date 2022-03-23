@@ -1,12 +1,27 @@
 #include <iostream>
 #include "FASTAreadset_HT.h"
-
+#include "FASTAreadset_LL.h"
 
 int main() {
     const char * sequence;
-    sequence = "AAT";
-    FASTAreadset_HT hashtable("/Users/ethanyackulic/CLionProjects/untitled1/testgenome", 10,3);
+    sequence = "AAAT";
+    FASTAreadset_HT hashtable("/Users/ethanyackulic/CLionProjects/untitled1/testgenome", 100,5);
     hashtable.print_hashtable();
+    cout << hashtable.radixSearch(sequence,  4) <<endl;
+    srand(2022);
+    //hashtable.findRandomGM16Mers(7,5,10);
+    hashtable.generateRandomSequence(5);
+    hashtable.findRandom16Mers(7,5,10);
+
+    //    int index;
+//    char * r_seq;
+//    for (int i = 0; i < 10; i++){
+//        index = hashtable.generateRandom(7, 5);
+//        cout << "index: " << index << endl;
+//        r_seq = hashtable.generateSequences(index, 5);
+//        cout << "r_seq: " << r_seq << endl;
+//        delete[] r_seq;
+//    }
     //make a subset of data and read this in
 
 //    cout << hashtable.get_radix_value(sequence, 3,) << endl;
