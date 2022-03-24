@@ -93,10 +93,23 @@ void FASTAreadset_LL::addNode(const char *input_seq) {
     }
 }
 
+bool FASTAreadset_LL::isEqual(const char * seq1, const char * seq2) {
+    //bool function to determine if char sequences are the same
+    int i = 0;
+    while (i < 50){
+        if (seq1[i] == seq2[i]) {
+            i++;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
 bool FASTAreadset_LL::isEqual(const char * seq1, const char * seq2, int seq_size) {
    //bool function to determine if char sequences are the same
     int i = 0;
-    while (i < 50){
+    while (i < seq_size){
         if (seq1[i] == seq2[i]) {
             i++;
         } else {
@@ -246,6 +259,30 @@ void FASTAreadset_LL::printSequences() {
     }
 }
 
+Node * FASTAreadset_LL::searchNode(const char *input){
+//takes a 51 character array input of A,C,T,G
+//returns match where found in instance
+    // int count = 0;
+    if (first == nullptr) {
+        //     cout << "cannot search empty list" << endl;
+        return nullptr;
+    } else {
+        Node *current_ptr = first;
+        while (current_ptr != nullptr) {
+            if (isEqual(current_ptr->sequence, input) == true) {
+                //        cout << "match found! Node location is: " << &current_ptr->sequence << endl;
+                //       count++;
+                //       cout << "entry # is : " << count <<endl;
+                return current_ptr;
+            } else {
+                current_ptr = current_ptr->next;
+                //        count ++;
+            }
+        }
+        //     cout << "No match found" << endl;
+        return nullptr;
+    }
+}
 
 
 
@@ -258,8 +295,8 @@ Node * FASTAreadset_LL::searchNode(const char *input, int seq_size){
         return nullptr;
     } else {
         Node *current_ptr = first;
-        while (current_ptr->next != nullptr) {
-            if (isEqual(current_ptr->sequence, input) == true) {
+        while (current_ptr != nullptr) {
+            if (isEqual(current_ptr, input, seq_size) == true) {
         //        cout << "match found! Node location is: " << &current_ptr->sequence << endl;
         //       count++;
         //       cout << "entry # is : " << count <<endl;

@@ -4,6 +4,7 @@
 
 #include "FASTAreadset_HT.h"
 #include <cmath>
+#include <stdlib.h>
 
 FASTAreadset_HT::FASTAreadset_HT(){
     collisionCount = 0;
