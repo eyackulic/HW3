@@ -48,7 +48,7 @@ public:
     void addNode(const char *input_seq);
     bool isEqual(const char * seq1, const char * seq2);
     bool isEqual(const char * seq1, const char * seq2, int seq_size);
-    bool isEqual(Node * seq1, const char * seq2, int seq_size);
+ //   bool isEqual(Node * seq1, const char * seq2, int seq_size);
     void singleArray(const char *filename); // build array
     void getSequences(); // grab all sequences
 
