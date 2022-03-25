@@ -296,7 +296,7 @@ Node * FASTAreadset_LL::searchNode(const char *input, int seq_size){
     } else {
         Node *current_ptr = first;
         while (current_ptr != nullptr) {
-            if (isEqual(current_ptr, input, seq_size) == true) {
+            if (isEqual(current_ptr->sequence, input, seq_size) == true) {
         //        cout << "match found! Node location is: " << &current_ptr->sequence << endl;
         //       count++;
         //       cout << "entry # is : " << count <<endl;

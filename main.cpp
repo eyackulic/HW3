@@ -5,13 +5,14 @@
 int main() {
     const char * sequence;
     sequence = "AAAT";
-    FASTAreadset_HT hashtable("/Users/ethanyackulic/CLionProjects/untitled1/testgenome", 100,5);
+    FASTAreadset_HT hashtable("/Users/ethanyackulic/CLionProjects/hw3/data/test.fasta", 10000,16);
     hashtable.print_hashtable();
-    cout << hashtable.radixSearch(sequence,  4) <<endl;
+   // cout << hashtable.radixSearch(sequence,  4) <<endl;
+    hashtable.printFragCount();
+    hashtable.print_genome(16);
     srand(2022);
-    //hashtable.findRandomGM16Mers(7,5,10);
-    hashtable.generateRandomSequence(5);
-    hashtable.findRandom16Mers(7,5,10);
+    hashtable.findRandom16Mers(16,1000);
+    hashtable.findRandomGM16Mers(16,16);
 
     //    int index;
 //    char * r_seq;
@@ -23,7 +24,13 @@ int main() {
 //        delete[] r_seq;
 //    }
     //make a subset of data and read this in
-
+ //   cout << hashtable.radixSearch(sequence, 5) << endl;
+ //   srand(2022);
+    //need a function to set genome size
+//    hashtable.findRandomGM16Mers(100,5,10);
+    //hashtable.generateSequences(5,5);
+    //hashtable.generateRandomSequence(5);
+    //   hashtable.findRandom16Mers(5, 5, 10);
 //    cout << hashtable.get_radix_value(sequence, 3,) << endl;
 //    cout << hashtable.get_radix_value("AAA", 3) << endl;
 //    cout << hashtable.get_radix_value("ACA", 3) << endl;

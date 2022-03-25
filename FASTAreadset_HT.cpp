@@ -12,7 +12,7 @@ FASTAreadset_HT::FASTAreadset_HT(){
 }
 
 FASTAreadset_HT::FASTAreadset_HT(const char *filename, int m, int seq_size) {
-
+    line = 0;
     collisionCount = 0;
     frag_found_counter = 0;
     hashtable_size = m;
@@ -105,21 +105,42 @@ void FASTAreadset_HT::getSequences(int seq_size) {
 //    }
     int start = 0;
     int end = seq_size;
-    int line = 0;
+    line = 0;
     //iterate through all genome entries
     while(end <= genome_index){
         int i = 0;
-        char * new_seq = new char[seq_size];
+        char * new_seq = new char[seq_size+1];
         while (i < seq_size) {
             new_seq[i] = genome_array[start + i];
             i++;
         }
+        new_seq[seq_size] = '\0';
         add_to_hashtable(new_seq, seq_size);
         //increment
         line++;
         start += 1;
         end += 1;
     }
+}
+void FASTAreadset_HT::print_genome(int seq_size) {
+    int start = 0;
+    int end = seq_size;
+    int line = 0;
+    //iterate through all genome entries
+    while (end <= genome_index) {
+        int i = 0;
+        char *new_seq = new char[seq_size + 1];
+        while (i < seq_size) {
+            new_seq[i] = genome_array[start + i];
+            i++;
+        }
+        line++;
+        start += 1;
+        end += 1;
+    }
+    cout << "total lines: " << line << endl;
+    cout << "count: " << genome_index << endl;
+
 }
 
 void FASTAreadset_HT::print_hashtable(){
@@ -146,11 +167,11 @@ void FASTAreadset_HT::search(const char * input){
 
 bool FASTAreadset_HT::radixSearch(const char * input, int seq_size) {
 //new search will go through radix values and find input
-
     unsigned int radix_value = get_radix_value(input, seq_size);
-    if (hash_table[radix_value].isEmpty()){
+    unsigned int hash_value = radix_value % hashtable_size;
+    if (hash_table[hash_value].isEmpty()){
         return false;
-    } else if(hash_table[radix_value].searchNode(input, seq_size) == nullptr){
+    } else if(hash_table[hash_value].searchNode(input, seq_size) == nullptr){
         return false;
     } else{
         frag_found_counter++;
@@ -159,6 +180,9 @@ bool FASTAreadset_HT::radixSearch(const char * input, int seq_size) {
 
 }
 
+void FASTAreadset_HT::printFragCount(){
+    cout << "total collisions count is: " << collisionCount<< endl;
+}
 int FASTAreadset_HT::generateRandom( int genome_size, int seq_size){
 
 
@@ -181,8 +205,9 @@ char * FASTAreadset_HT::generateSequences( int g_index, int seq_size){
     return random_genome_sequence;
 }
 
-void FASTAreadset_HT::findRandomGM16Mers(int genome_size, int seq_size, int iterations){
+void FASTAreadset_HT::findRandomGM16Mers(int seq_size, int iterations){
    int index;
+   int genome_size = line;
    char * r_seq;
     for (int i=0; i <iterations; i++){
         index = generateRandom(genome_size, seq_size);
@@ -215,8 +240,9 @@ char * FASTAreadset_HT::generateRandomSequence(int seq_size) {
     return random_seq;
 }
 
-void FASTAreadset_HT::findRandom16Mers(int genome_size, int seq_size, int iterations){
+void FASTAreadset_HT::findRandom16Mers(int seq_size, int iterations){
     char * index;
+    genome_index = line;
     for (int i=0; i <iterations; i++){
         index = generateRandomSequence(seq_size);
         cout << radixSearch(index, seq_size) << endl;

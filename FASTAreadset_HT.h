@@ -14,6 +14,7 @@ private:
     int collisionCount;
     int frag_found_counter;
     FASTAreadset_LL * hash_table;
+    int line;
     char * genome_array;
     Node *first = nullptr;
     Node *last = nullptr;
@@ -29,14 +30,16 @@ public:
     void getSequences(int seq_size);
     void singleArray(const char *filename);
     void print_hashtable();
+    void printFragCount();
+    void print_genome(int seq_size);
     //add search function
     void search(const char * input);
     bool radixSearch(const char * input, int seq_size);
     bool isEqual(const char * seq1, const char * seq2);
     int generateRandom (int genome_size, int seq_size);
     char * generateSequences(int g_index, int seq_size);
-    void findRandomGM16Mers(int genome_size, int seq_size, int iterations);
-    void findRandom16Mers(int genome_size, int seq_size, int iterations);
+    void findRandomGM16Mers( int seq_size, int iterations);
+    void findRandom16Mers( int seq_size, int iterations);
     char * generateRandomSequence(int seq_size);
 }
 ;
