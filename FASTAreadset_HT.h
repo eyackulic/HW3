@@ -9,8 +9,8 @@
 
 class FASTAreadset_HT {
 private:
-    unsigned int hashtable_size;
-    unsigned int genome_index;
+    int hashtable_size;
+    int genome_index;
     int collisionCount;
     int frag_found_counter;
     FASTAreadset_LL * hash_table;
@@ -33,7 +33,6 @@ public:
     void printCollisionCount();
     void print_genome(int seq_size);
     //add search function
-    void search(const char * input);
     bool radixSearch(const char * input, int seq_size);
     bool isEqual(const char * seq1, const char * seq2);
     int generateRandom (int genome_size, int seq_size);

@@ -339,7 +339,7 @@ void FASTAreadset_LL::largeSearch(int lines_to_read) {
    int num_read = 0;
    Timer time;
    //determine lines to read since full dataset takes forever
-    if (lines_to_read == NULL){
+    if (lines_to_read == 0){
         num_read = line;
     }else{
         num_read = lines_to_read;

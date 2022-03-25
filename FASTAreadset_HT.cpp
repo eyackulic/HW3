@@ -151,20 +151,6 @@ void FASTAreadset_HT::print_hashtable(){
     }
 }
 
-void FASTAreadset_HT::search(const char * input){
-        //abridged version of the first
-        //iterates number of matches
-        //to be used in for loop for large search
-        unsigned int val = 0;
-    //    val = get_radix_value(input);
-    for (int i =0; i < hashtable_size; i++) {
-      //  hash_table[i].largeSearch(100);
- //              hash_table[i].abridgedSearch(val);
-        //      hash_table->largeSearch(100);
-        //      cout << "match found!" << " location is: " << i  << endl;
-    }
-    }
-
 bool FASTAreadset_HT::radixSearch(const char * input, int seq_size) {
 //new search will go through radix values and find input
     unsigned int radix_value = get_radix_value(input, seq_size);
