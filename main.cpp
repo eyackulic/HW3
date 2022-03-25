@@ -1,7 +1,8 @@
 #include <iostream>
+#include <cstring>
 #include "FASTAreadset_HT.h"
 #include "FASTAreadset_LL.h"
-
+// mean of a bernoulli is n * p so that is expected outcome of 1% trial (~84%)
 int main(int argc, char ** argv) {
     srand(2022);
     if (strcmp(argv[1], "1a") == 0) {
