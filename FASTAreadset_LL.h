@@ -47,6 +47,8 @@ public:
   //class methods
     void addNode(const char *input_seq);
     bool isEqual(const char * seq1, const char * seq2);
+    bool isEqual(const char * seq1, const char * seq2, int seq_size);
+ //   bool isEqual(Node * seq1, const char * seq2, int seq_size);
     void singleArray(const char *filename); // build array
     void getSequences(); // grab all sequences
 
@@ -57,13 +59,16 @@ public:
     void printArray();
     void printSequences();
     void printLineCount();
+    bool isEmpty();
 
     //searches
     void largeSearch(int line);
     Node * searchNode(const char * input);
+    Node * searchNode(const char * input, int seq_size);
     void abridgedSearch(const char * input);
     const char * searchNode2(const char * input);
 
+    void printLL2();
 };
 
 //timer function
