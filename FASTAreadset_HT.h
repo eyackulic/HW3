@@ -30,7 +30,7 @@ public:
     void getSequences(int seq_size);
     void singleArray(const char *filename);
     void print_hashtable();
-    void printFragCount();
+    void printCollisionCount();
     void print_genome(int seq_size);
     //add search function
     void search(const char * input);
@@ -41,6 +41,14 @@ public:
     void findRandomGM16Mers( int seq_size, int iterations);
     void findRandom16Mers( int seq_size, int iterations);
     char * generateRandomSequence(int seq_size);
+    float randomFloat();
+    bool bernoulli_trial(float p);
+    char random_char(char original);
+    char * generateFalseSequences( int g_index, int seq_size, float p);
+    void findMistakes(int seq_size, float p);
+
+
+
 }
 ;
 #endif //UNTITLED1_FASTAREADSET_HT_H

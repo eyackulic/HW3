@@ -59,17 +59,17 @@ void FASTAreadset_HT::add_to_hashtable(const char *sequence, int seq_size){
     unsigned int hash_index = radix_value % hashtable_size;
 
     if(hash_table[hash_index].isEmpty()){
-        cout << "entry is empty" << endl;
+      //  cout << "entry is empty" << endl;
         hash_table[hash_index].addNode(sequence);
     }else {
         collisionCount++;
         if (hash_table[hash_index].searchNode(sequence, seq_size) == nullptr) {
             hash_table[hash_index].addNode(sequence);
         } else {
-            cout << "already in table: " << sequence << endl;
+         //   cout << "already in table: " << sequence << endl;
         }
     }
-    cout << collisionCount <<endl;
+    //cout << collisionCount <<endl;
     // make a function to print final collisionCount
 
 }
@@ -180,19 +180,16 @@ bool FASTAreadset_HT::radixSearch(const char * input, int seq_size) {
 
 }
 
-void FASTAreadset_HT::printFragCount(){
+void FASTAreadset_HT::printCollisionCount(){
     cout << "total collisions count is: " << collisionCount<< endl;
 }
 int FASTAreadset_HT::generateRandom( int genome_size, int seq_size){
 
-
     int r_num = rand();
-    cout << "inside random r_num: " << r_num << endl;
-
     int randomNumber =  r_num % (genome_size - seq_size + 1);
-    cout << "randomNumber " << randomNumber << endl;
     return randomNumber;
 }
+
 
 char * FASTAreadset_HT::generateSequences( int g_index, int seq_size){
 
@@ -208,7 +205,7 @@ char * FASTAreadset_HT::generateSequences( int g_index, int seq_size){
 void FASTAreadset_HT::findRandomGM16Mers(int seq_size, int iterations){
    int index;
    int genome_size = line;
-   char * r_seq;
+    frag_found_counter = 0;
     for (int i=0; i <iterations; i++){
         index = generateRandom(genome_size, seq_size);
         r_seq = generateSequences(index, seq_size);
@@ -243,12 +240,13 @@ char * FASTAreadset_HT::generateRandomSequence(int seq_size) {
 void FASTAreadset_HT::findRandom16Mers(int seq_size, int iterations){
     char * index;
     genome_index = line;
+    frag_found_counter = 0;
     for (int i=0; i <iterations; i++){
         index = generateRandomSequence(seq_size);
         cout << radixSearch(index, seq_size) << endl;
 
     }
-    cout << "total fragments found : " << frag_found_counter <<endl;
+    cout << "total fragments found in random sequences : " << frag_found_counter <<endl;
 }
 
 // for next part, create a 16 mer template,
@@ -271,4 +269,63 @@ bool FASTAreadset_HT::isEqual(const char * seq1, const char * seq2) {
         }
     }
     return true;
+}
+
+//~84% OF ENTRIES (idealized case)
+
+float FASTAreadset_HT::randomFloat(){
+    float new_val;
+    new_val = (float)rand()/(float)RAND_MAX;
+    return new_val;
+}
+
+bool FASTAreadset_HT::bernoulli_trial(float p){
+    float new_val;
+    new_val = randomFloat();
+    if(new_val <= p) {
+        return true;
+    }else{
+        return false;
+    }
+}
+
+char FASTAreadset_HT::random_char(char original){
+    char possible_vals[4] = {'A', 'C', 'G', 'T'};
+    char rand_vals = original;
+    int random_number;
+
+    while(rand_vals == original){
+        random_number = rand() % 4;
+        rand_vals = possible_vals[random_number];
+    }
+
+    return rand_vals;
+}
+
+char * FASTAreadset_HT::generateFalseSequences( int g_index, int seq_size, float p) {
+
+    char *random_genome_sequence = new char[seq_size + 1];
+    for (int i = 0; i < seq_size; i++) {
+        if (bernoulli_trial(p)) {
+            random_genome_sequence[i] = random_char(genome_array[g_index + i]);
+        } else {
+            random_genome_sequence[i] = genome_array[g_index + i];
+        }
+        random_genome_sequence[seq_size] = '\0';
+    }
+    return random_genome_sequence;
+}
+
+
+void FASTAreadset_HT::findMistakes(int seq_size, float p){
+    int genome_size = line;
+    frag_found_counter = 0;
+    for (int i=0; i < genome_size - seq_size + 1; i++){
+        char * r_seq = generateFalseSequences(i, seq_size, p);
+        radixSearch(r_seq, seq_size);
+        delete [] r_seq;
+        //<< endl;
+
+    }
+    cout << "total fragments found in hash table with 1% character error: " << frag_found_counter <<endl;
 }
