@@ -7,26 +7,41 @@
 #include <stdlib.h>
 
 FASTAreadset_HT::FASTAreadset_HT(){
+    //default constructor for FASTA readset hashtable
+    //initializing counters
     collisionCount = 0;
     frag_found_counter = 0;
 }
 
 FASTAreadset_HT::FASTAreadset_HT(const char *filename, int m, int seq_size) {
+    //custom constructor - takes a file name and two integers
+    // m is size of hashtable
+    //seq size is number of characters per sequence
+    //output is all possible, sequentially-derived sequences from filename, based on seq_size
+    // Function calls: FASTAreadsetLL::FASTAreadsetLL(default),FASTAreadsetHT::singleArray; FASTAreadsetHT::getSequences
+
+    // initializing values
     line = 0;
     collisionCount = 0;
     frag_found_counter = 0;
     hashtable_size = m;
+    // initializing hash_table from Linked List class
     hash_table = new FASTAreadset_LL[m];
-
+    //fills single array with all characters
     singleArray(filename);
+    // derives all possible sequences from SingleArray
     getSequences(seq_size);
 
 }
 
 
 unsigned int FASTAreadset_HT::get_radix_value(const char *sequence, int seq_size) {
+    //function to derive a radix value for an input sequence of seq_size size
+    //function calculates the value for each character based on its position
+    //sequence radix value are updated through addition as i increases (i.e. moves further right along the sequence)
+    //Function calls:
+    //Function called in:
     unsigned int radix_value = 0;
-
     for(int i=seq_size - 1; i>=0;i--){
         switch (sequence[i]){
             case 'A':
@@ -50,11 +65,13 @@ unsigned int FASTAreadset_HT::get_radix_value(const char *sequence, int seq_size
         }
 
     }
-
+//returns final value
     return radix_value;
 }
 
 void FASTAreadset_HT::add_to_hashtable(const char *sequence, int seq_size){
+  //function to add a sequence to the hashtable
+
     unsigned int radix_value = get_radix_value(sequence, seq_size);
     unsigned int hash_index = radix_value % hashtable_size;
 
@@ -202,6 +219,14 @@ void FASTAreadset_HT::findRandomGM16Mers(int seq_size, int iterations){
 }
 
 char * FASTAreadset_HT::generateRandomSequence(int seq_size) {
+    //function to generate a random sequence string of size seq_size
+    // for each character in string, a random number between 0-3 is selected
+    //char 'charly' variable is switched to correct character based on selected random number
+    //process is completed for seq_size length
+    //result is a string of A,C,T, and G, chosen at random
+    //Function calls: <none>
+    //Function used in: findRandom16Mers
+
     char * random_seq = new char[seq_size+1];
     char charly;
     for (int i = 0; i < seq_size; i++) {
@@ -216,8 +241,10 @@ char * FASTAreadset_HT::generateRandomSequence(int seq_size) {
         } else if (rand ==3){
             charly = 'T';
         }
+        //add new character to sequence
         random_seq[i] = charly;
     }
+    //cap end of string
     random_seq[seq_size] = '\0';
    // cout << random_seq <<endl;
     return random_seq;
@@ -243,19 +270,19 @@ void FASTAreadset_HT::findRandom16Mers(int seq_size, int iterations){
 // if number = 1, switch character
 // use binomial distribution
 
-
-bool FASTAreadset_HT::isEqual(const char * seq1, const char * seq2) {
-    //bool function to determine if char sequences are the same
-    int i = 0;
-    while (i < 50){
-        if (seq1[i] == seq2[i]) {
-            i++;
-        } else {
-            return false;
-        }
-    }
-    return true;
-}
+//
+//bool FASTAreadset_HT::isEqual(const char * seq1, const char * seq2) {
+//    //bool function to determine if char sequences are the same
+//    int i = 0;
+//    while (i < 50){
+//        if (seq1[i] == seq2[i]) {
+//            i++;
+//        } else {
+//            return false;
+//        }
+//    }
+//    return true;
+//}
 
 //~84% OF ENTRIES (idealized case)
 

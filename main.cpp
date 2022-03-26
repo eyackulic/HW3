@@ -25,11 +25,11 @@ int main(int argc, char ** argv) {
         time(&begin);
         hashtable.findRandom16Mers(16, 1000000);
         time(&end);
-        cout << "time of random search : " << end-begin << "seconds" << endl;
+        cout << "time of random search : " << end-begin << " seconds" << endl;
         time(&begin);
         hashtable.findRandomGM16Mers(16, 1000000);
         time(&end);
-        cout << "time of genome search : " << end-begin << "seconds" << endl;
+        cout << "time of genome search : " << end-begin << " seconds" << endl;
 //1c part I. should be all possible sequences - 15 ? double check with slava
     }
         if(strcmp(argv[1], "1c") == 0) {
@@ -37,7 +37,7 @@ int main(int argc, char ** argv) {
             time_t end;
             //set argv[3] to 10 million
             FASTAreadset_HT hashtable(argv[2], atoi(argv[3]), 16);
-          //  hashtable.print_genome(16);
+            hashtable.print_genome(16);
             time(&begin);
             hashtable.findMistakes(16,0.01);
             time(&end);
