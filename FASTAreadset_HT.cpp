@@ -309,9 +309,7 @@ void FASTAreadset_HT::findMistakes(int seq_size, float p){
     for (int i=0; i < genome_size - seq_size + 1; i++){
         char * r_seq = generateFalseSequences(i, seq_size, p);
         radixSearch(r_seq, seq_size);
-        delete [] r_seq;
-        //<< endl;
-
+        delete[] r_seq;
     }
     cout << "total fragments found in hash table with 1% character error: " << frag_found_counter <<endl;
 }

@@ -37,11 +37,11 @@ int main(int argc, char ** argv) {
             time_t end;
             //set argv[3] to 10 million
             FASTAreadset_HT hashtable(argv[2], atoi(argv[3]), 16);
-            hashtable.print_genome(16);
+          //  hashtable.print_genome(16);
             time(&begin);
             hashtable.findMistakes(16,0.01);
             time(&end);
-            cout << "time of random search : " << end-begin << "seconds" << endl;
+            cout << "time of random search : " << end-begin << " seconds" << endl;
 //    int index;
 //    char * r_seq;
 //    for (int i = 0; i < 10; i++){
