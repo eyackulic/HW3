@@ -2,7 +2,7 @@
 #include <cstring>
 #include "FASTAreadset_HT.h"
 #include "FASTAreadset_LL.h"
-// mean of a bernoulli is n * p so that is expected outcome of 1% trial (~84%)
+
 int main(int argc, char ** argv) {
     srand(2022);
     if (strcmp(argv[1], "1a") == 0) {
@@ -14,9 +14,10 @@ int main(int argc, char ** argv) {
        time(&end);
        cout << "populating hashtable for m = " << argv[3] << " took " << end-begin << " seconds" << endl;
         hashtable.printCollisionCount();
-        hashtable.print_genome(16);
+        hashtable.findAll(16);
 
 }
+
     if(strcmp(argv[1], "1b") == 0) {
         time_t begin;
         time_t end;
@@ -35,14 +36,14 @@ int main(int argc, char ** argv) {
         if(strcmp(argv[1], "1c") == 0) {
             time_t begin;
             time_t end;
-            //set argv[3] to 10 million
             FASTAreadset_HT hashtable(argv[2], atoi(argv[3]), 16);
             hashtable.print_genome(16);
             time(&begin);
             hashtable.findMistakes(16,0.01);
             time(&end);
             cout << "time of random search : " << end-begin << " seconds" << endl;
-//    int index;
+            hashtable.findAll(16);
+            //    int index;
 //    char * r_seq;
 //    for (int i = 0; i < 10; i++){
 //        index = hashtable.generateRandom(7, 5);

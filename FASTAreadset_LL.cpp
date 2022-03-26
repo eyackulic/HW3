@@ -15,7 +15,7 @@ FASTAreadset_LL::FASTAreadset_LL() {
 //custom constructor
 //takes a filename as input and returns a linked list of nodes for the length of the file
 
-FASTAreadset_LL::FASTAreadset_LL(const char *filename) {
+FASTAreadset_LL::FASTAreadset_LL(const char *filename, int seq_size) {
     cout << "The custom constructor ran \n";
 
     ifstream input;        //create filestream to read the file
@@ -25,8 +25,8 @@ FASTAreadset_LL::FASTAreadset_LL(const char *filename) {
     //initiate genome_array as null ptr
     genome_array = nullptr;
     while (input.good()) {
-        temp_head = new char[51];
-        temp_read = new char[51];
+        temp_head = new char[seq_size +1];
+        temp_read = new char[seq_size +1];
         input >> temp_head;    //read in the header line
         input >> temp_read;
         // add node
@@ -74,6 +74,12 @@ FASTAreadset_LL::~FASTAreadset_LL() {
 
 // functions
 void FASTAreadset_LL::addNode(const char *input_seq) {
+    //a function that adds a node to the end of a linkedlist
+    //Function calls:
+    //Function called in:
+    //          FASTAreadsetLL; LL.cpp; line 18
+    //          getSequences; HT.cpp ; line 144
+
     //initiate new node
     Node *new_node = new Node;
     // add sequence
@@ -93,21 +99,13 @@ void FASTAreadset_LL::addNode(const char *input_seq) {
     }
 }
 
-bool FASTAreadset_LL::isEqual(const char * seq1, const char * seq2) {
-    //bool function to determine if char sequences are the same
-    int i = 0;
-    while (i < 50){
-        if (seq1[i] == seq2[i]) {
-            i++;
-        } else {
-            return false;
-        }
-    }
-    return true;
-}
 
 bool FASTAreadset_LL::isEqual(const char * seq1, const char * seq2, int seq_size) {
    //bool function to determine if char sequences are the same
+    //Function calls:
+    //Function called in:
+    //          searchNode; LL.cpp; line 129
+
     int i = 0;
     while (i < seq_size){
         if (seq1[i] == seq2[i]) {
@@ -119,28 +117,13 @@ bool FASTAreadset_LL::isEqual(const char * seq1, const char * seq2, int seq_size
     return true;
 }
 
-void FASTAreadset_LL::printLL() {
-//print linked list
-    if (first != nullptr) {
-        Node *current_ptr;
-        current_ptr = first;
-        while (current_ptr != nullptr) {
-            cout << current_ptr->sequence << endl;
-            //if(current_ptr->sequence == entry_sequence){
-            //break
-            // current_ptr = current_ptr->next;
-            //   cout << "repeat" << endl;
-            //else(){
-            //  current_ptr = current_ptr->next;
-
-            current_ptr = current_ptr->next;
-        }
-    } else {
-        cout << "The list is empty" << endl;
-    }
-}
 
 bool FASTAreadset_LL::isEmpty(){
+    //bool function to determine if LL is empty
+    //Function calls:
+    //Function called in:
+    //          add_to_hashtable; HT.cpp; line 82
+    //          radixSearch; HT.cpp ; line 202
     if(first == nullptr){
         return true;
     }else{
@@ -149,26 +132,44 @@ bool FASTAreadset_LL::isEmpty(){
 }
 
 Node * FASTAreadset_LL::searchNode(const char *input, int seq_size){
-//takes a 51 character array input of A,C,T,G
+//takes a character array input of A,C,T,G of seq_size length
 //returns match where found in instance
+    //Function calls:
+    //          isEqual; HT.cpp; line 103
+    //Function called in:
+    //          add_to_hashtable; HT.cpp; line 82
+    //          radixSearch; HT.cpp ; line 202
+
    // int count = 0;
     if (first == nullptr) {
-   //     cout << "cannot search empty list" << endl;
         return nullptr;
     } else {
         Node *current_ptr = first;
         while (current_ptr != nullptr) {
             if (isEqual(current_ptr->sequence, input, seq_size) == true) {
-        //        cout << "match found! Node location is: " << &current_ptr->sequence << endl;
-        //       count++;
-        //       cout << "entry # is : " << count <<endl;
                 return current_ptr;
             } else {
                 current_ptr = current_ptr->next;
-        //        count ++;
             }
         }
-   //     cout << "No match found" << endl;
         return nullptr;
     }
 }
+
+void FASTAreadset_LL::printLL() {
+//print linked list
+    //Function calls:
+    //Function called in:
+    //              print_hashtable;HT.cpp; line 190
+    if (first != nullptr) {
+        Node *current_ptr;
+        current_ptr = first;
+        while (current_ptr != nullptr) {
+            cout << current_ptr->sequence << endl;
+            current_ptr = current_ptr->next;
+        }
+    } else {
+        cout << "The list is empty" << endl;
+    }
+}
+

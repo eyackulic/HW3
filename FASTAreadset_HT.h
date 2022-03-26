@@ -45,6 +45,7 @@ public:
     char random_char(char original);
     char * generateFalseSequences( int g_index, int seq_size, float p);
     void findMistakes(int seq_size, float p);
+    void findAll(int seq_size);
 
 
 
